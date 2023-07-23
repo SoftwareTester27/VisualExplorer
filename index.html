@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Explorer</title>
+    <link rel="shortcut icon" href="VisualExplorerLogo.ico" type="image/x-icon">
+    <style>
+        /* Reset some default styles */
+        body, h1, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+        
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #3d3d3d;
+            background: linear-gradient(135deg, #ef00ff, #0077ff, #00ff37);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav li {
+            margin-left: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url('path/to/hero-image.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Form Section */
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 100px;
+        }
+
+        form label,
+        form input {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 100px;
+        }
+
+        form button {
+            background-color: #0078d4;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+
+        .hero .download-button {
+            display: inline-block;
+            background-color: rgba(109, 109, 109, 0.459); /* Added alpha (opacity) value */
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none; /* Remove default link underline */
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .hero .download-button::before {
+            content: '\2192'; /* Unicode arrow right symbol */
+            position: absolute;
+            top: 50%;
+            right: -200px; /* Increased right value for margin */
+            font-size: 18px;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.2s, right 0.2s;
+        }
+
+        .hero .download-button:hover {
+            background-color: rgba(109, 109, 109, 0.7);
+            transform: translateX(5px);
+        }
+
+        .hero .download-button:hover::before {
+            opacity: 1;
+            right: 5px;
+        }
+
+        /* Define the pulse animation */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .hero .button-container {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <img src="VisualExplorerLogo.png" width="40" margin="0px"></img><h1>Visual Explorer</h1>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div>
+            <h1>Welcome to Visual Explorer</h1>
+            <p>Explore the content and discover the web using the new Visual Explorer.</p>
+            <div class="button-container">
+                <button class="download-button"><a href="Visual Explorer v1.1.0.0 Setup.exe" target="_blank" rel="noopener noreferrer">Download Visual Explorer</a></button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // JavaScript for form validation
+        const contactForm = document.getElementById('contactForm');
+
+        contactForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const name = contactForm.elements['name'].value;
+            const email = contactForm.elements['email'].value;
+            const message = contactForm.elements['message'].value;
+
+            // Perform form validation here
+            // For example, you can check if fields are not empty and if the email is valid.
+            // You can also send the form data to a server using JavaScript's fetch API or other methods.
+        });
+    </script>
+</body>
+
+</html>
