@@ -5,7 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visual Explorer</title>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "firebase/app";
+        import { getDatabase } from "firebase/database";
+        import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyC7AU9Fh8-QWGLurGAssdB08pen3C1ILbg",
+        authDomain: "visual-explorer-authentication.firebaseapp.com",
+        databaseURL: "https://visual-explorer-authentication-default-rtdb.firebaseio.com",
+        projectId: "visual-explorer-authentication",
+        storageBucket: "visual-explorer-authentication.appspot.com",
+        messagingSenderId: "854557298979",
+        appId: "1:854557298979:web:dbdd58db252ed0032b7c96"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const databse = getDatabase(app);
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+        });
+    </script>
     <link rel="shortcut icon" href="VisualExplorerLogo.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* Reset some default styles */
         body, h1, p, ul, li {
@@ -23,10 +59,13 @@
             line-height: 1.6;
             color: #333;
             background-color: #3d3d3d;
-            background: linear-gradient(135deg, #ef00ff, #0077ff, #00ff37);
+            background: linear-gradient(135deg, #ff0000, #48ff00);
             background-size: 400% 400%;
             animation: gradientShift 10s ease infinite;
+            overflow: auto;
+            
         }
+
         @keyframes gradientShift {
             0% {
                 background-position: 0% 50%;
@@ -41,12 +80,14 @@
 
         /* Navigation Bar */
         nav {
-            background-color: #333;
+            /* background-color: #333; */
             color: #fff;
             padding: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: #303030d3;
+            z-index: 1;
         }
 
         nav h1 {
@@ -64,15 +105,14 @@
 
         /* Hero Section */
         .hero {
-            background-image: url('path/to/hero-image.jpg');
-            background-size: cover;
-            background-position: center;
-            height: 400px;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: #fff;
+            overflow: auto;
+            padding: 50% 0;
         }
 
         .hero h1 {
@@ -86,47 +126,9 @@
             margin: 0 auto;
         }
 
-        /* Form Section */
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 100px;
-        }
-
-        form label,
-        form input {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        form input {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 100px;
-        }
-
-        form button {
-            background-color: #0078d4;
-            color: #fff;
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        form button:hover {
-            background-color: #0056b3;
-            color: #fff;
-        }
-
         .hero .download-button {
             display: inline-block;
-            background-color: rgba(109, 109, 109, 0.459); /* Added alpha (opacity) value */
+            background-color: rgba(0, 0, 0, 0.259); /* Added alpha (opacity) value */
             color: #fff;
             padding: 10px 20px;
             font-size: 16px;
@@ -141,24 +143,19 @@
         }
 
         .hero .download-button::before {
-            content: '\2192'; /* Unicode arrow right symbol */
             position: absolute;
             top: 50%;
-            right: -200px; /* Increased right value for margin */
             font-size: 18px;
-            transform: translateY(-50%);
             opacity: 0;
-            transition: opacity 0.2s, right 0.2s;
+            transition: opacity 0.2s;
         }
 
         .hero .download-button:hover {
-            background-color: rgba(109, 109, 109, 0.7);
-            transform: translateX(5px);
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .hero .download-button:hover::before {
             opacity: 1;
-            right: 5px;
         }
 
         /* Define the pulse animation */
@@ -174,8 +171,113 @@
             }
         }
 
+         /* Planet animation styles */
+         .planet-wrapper {
+            position: fixed;
+            top: 70%;
+            right: 0;
+            z-index: -1; /* Ensure the animation appears above other content */
+            pointer-events: none; /* Ignore pointer events on the container */
+        }
+
+         .planet-container {
+            position: absolute;
+            bottom: 0%;
+            left: 70%;
+            width: 150px;
+            height: 150px;
+            transform: translate(-50%, -50%);
+            animation: planetOrbit 16s linear infinite;
+            
+        }
+
+        .planet {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.388);
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 185px;
+            height: 185px;
+            border: 2px solid #00000015;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            animation: ringOrbit 10s linear infinite;
+            overflow: hidden;
+        }
+
+        @keyframes planetOrbit {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @keyframes ringOrbit {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
         .hero .button-container {
             text-align: center;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #38383865;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            /* padding: 10px; */
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            width: 40px;
+            height: 40px;
+        }
+
+        img {
+            margin-right: 100px;
+            width: 40px;
+        }
+        
+
+        .title {
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: absolute;
+        }
+
+        h1.heading {
+            font-size: 4rem;
+        }
+
+        .content {
+            padding: 20% 45%;
+            background: #00000023;
+            overflow: hidden;
+            /* display: */
         }
     </style>
 </head>
@@ -183,41 +285,96 @@
 <body>
     <!-- Navigation Bar -->
     <nav>
-        <img src="VisualExplorerLogo.png" width="40" margin="0px"></img><h1>Visual Explorer</h1>
+        <img src="VisualExplorerLogo.png"></img><h1>Visual Explorer</h1>
         <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div>
-            <h1>Welcome to Visual Explorer</h1>
+    <div class="content">
+        <div class="section1">
+        <!-- Hero Section -->
+        <section class="hero">
+        <div class="title">
+            <h1 class="heading">Welcome to Visual Explorer</h1>
             <p>Explore the content and discover the web using the new Visual Explorer.</p>
             <div class="button-container">
-                <button class="download-button"><a href="Visual Explorer v1.1.0.0 Setup.exe" target="_blank" rel="noopener noreferrer">Download Visual Explorer</a></button>
+                <button class="download-button" id="db" onclick="dbclick()">Download</button>
+            </div>
+            <script>
+                let dbw = document.getElementById("db");
+                function dbclick() {
+                    dbw.innerText = "Redirecting To Download Page";
+                    setTimeout(rdb, 2000);
+                }
+                
+                function rdb() {
+                    window.location = "downloadwindows.html"
+                }
+            </script>
+        </div>
+        </section>
+            <!-- Planet Animation -->
+            <div class="planet-wrapper">
+                <div class="planet-container">
+                    <div class="planet"></div>
+                    <div class="ring"></div>
+                </div>
             </div>
         </div>
-    </section>
+        <div class="section2">
+            <div class="why">
+                <h1>
+                    Why Visual Explorer?
+                </h1>
+            </div>
+        </div>
+    </div>
+    
+    <button class="scroll-to-top" onclick="scrollToTop()">↑</button>
+        <script>
+            /* Function to scroll to top */
+            function scrollToTop() {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
 
-    <script>
-        // JavaScript for form validation
-        const contactForm = document.getElementById('contactForm');
+            /* Show/hide scroll-to-top button based on scrolling position */
+            window.addEventListener("scroll", function () {
+                const scrollToTopButton = document.querySelector(".scroll-to-top");
+                if (window.pageYOffset > 300) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
+            });
 
-        contactForm.addEventListener('submit', (event) => {
-            event.preventDefault();
+            const linkdb = document.getElementById("db")
+            const downloadButton = document.getElementById("downloadBtn");
+            const isWindows = navigator.platform.includes("Win");
+            const isMacOS = navigator.platform.includes("Mac");
+            const isLinux = navigator.platform.includes("Linux");
 
-            const name = contactForm.elements['name'].value;
-            const email = contactForm.elements['email'].value;
-            const message = contactForm.elements['message'].value;
-
-            // Perform form validation here
-            // For example, you can check if fields are not empty and if the email is valid.
-            // You can also send the form data to a server using JavaScript's fetch API or other methods.
-        });
-    </script>
+            if (isWindows) {
+                linkdb.innerText = "Download for Windows";
+                dbw.style.display = "flexbox"
+                dbm.style.display = "none"
+                dbl.style.display = "none"
+            } else if (isMacOS) {
+                linkdb.innerText = "Download for Mac";
+                dbw.style.display = "none"
+                dbm.style.display = "flexbox"
+                dbl.style.display = "none"
+            } else if (isLinux) {
+                linkdb.innerText = "Download for Linux";
+                dbw.style.display = "none"
+                dbm.style.display = "none"
+                dbl.style.display = "flexbox"
+            } else {
+                linkdb.innerHTML = "OS Not Supported."
+            }
+            console.log(linkdb);
+        </script>
 </body>
 
 </html>
