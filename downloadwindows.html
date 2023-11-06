@@ -3,54 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/78668e11cd.js" crossorigin="anonymous"></script>
     <title>Visual Explorer - Download</title>
     <style>
         body{
             font-family: Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            background-color: #3d3d3d;
-            background: linear-gradient(135deg, #ff0000, #48ff00);
-            background-size: 400% 400%;
-            animation: gradientShift 10s ease infinite;
-            overflow: auto;
+            background: url("https://static.vecteezy.com/system/resources/previews/006/852/804/original/abstract-blue-background-simple-design-for-your-website-free-vector.jpg");
+            /* background-size: 100% 279%; */
+            /* animation: gradientShift 10s ease infinite; */
+            /* overflow: auto; */
             background-repeat: none;
             /* margin: 0; */
             
         }
 
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
         .container {
-            background-color: #00000033;
-           
+            background: #2b2b2b44;
+            backdrop-filter: blur(80px);
             justify-content: center;
             align-items: center;
             width: 100%;
             height: 100%;
             margin: 0;
-            padding: 0;
+            padding: 30px;
+            border-radius: 20px;
         }
 
         * {
             margin: 0;
             padding: 0;
         }
+
+        h1{
+            margin: 5%;
+            color: white;
+            font-size: 2.6em;
+            padding-left: 50px;
+            width: 90%;
+            background: #2c2c2c5b;
+            border-radius: 20px;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(40px);
+        }
+
+        .lv{
+            margin: 8%;
+        }
+
+        .download{
+            background: #2c2c2c;
+            padding: 22px;
+            padding-left: 29px;
+            padding-right: 29px;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.4rem;
+            margin-top: 10px;
+            color: white;
+            cursor: pointer;
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+
+        .vtitle {
+            color: #fff;
+            margin: 0px;
+            margin-left: 0px;
+            font-size: 2rem;
+        }
+
+        i.fa-file-arrow-down {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
+    <div class="lv">
+    <h1>Visual Explorer Download Archive For Windows</h1>
     <div class="container">
-        <button class="download" id="downloadBtn linkdb"><a href="Smartly Coded Visual Explorer v1.1.0.0 Setup.exe">Download</a></button>
+        <div class="vtitle"><b>Visual Explorer v1.1.0.0</b></div>
+        <a href="Smartly Coded Visual Explorer v1.1.2.0 Setup.exe" class="dl v1100"><button class="download" id="downloadBtn linkdb">Download    <i class="fa-solid fa-file-arrow-down"></i></button></a>
     <script>
         const linkdb = document.getElementById("linkdb")
         const downloadButton = document.getElementById("downloadBtn");
@@ -72,5 +110,6 @@
         console.log(linkdb);
     </script>
     </div>
+</div>
 </body>
 </html>
